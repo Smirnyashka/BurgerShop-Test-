@@ -5,7 +5,7 @@ namespace Code.Configs
 {
     public class HeroConfig
     {
-        private float _speed = 15f;
+        private float _speed = 5f;
 
         public float Speed => _speed;
     }

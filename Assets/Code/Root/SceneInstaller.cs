@@ -29,7 +29,6 @@ namespace Code.Root
         {
             Container.Bind<HeroConfig>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerMovement>().FromInstance(heroPlayerMovement).AsSingle();
-            Container.Bind<IAttackble>().To(typeof(PlayerAttack)).AsSingle();
         }
 
         private void BindConfigs()

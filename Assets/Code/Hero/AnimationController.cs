@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Code.Hero
 {
-    public class AnimationController: ITickable
+    public class AnimationController
     {
 
         private static readonly int Walk = Animator.StringToHash("isMoving");
@@ -17,17 +17,7 @@ namespace Code.Hero
             _animator = animator;
         }
         
-        public void Tick()
-        {
-            
-        }
-
         public void SetWalkAnimationState(bool value) => 
             _animator.SetBool(Walk,value);
-
-        public void PlayAttack()
-        {
-            _animator.SetTrigger(Attack);
-        }
     }
 }

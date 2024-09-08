@@ -22,8 +22,8 @@ namespace Code.Services.CameraService
         {
             _position = _targetTransform.position;
 
-            _position.y = 40;
-            _position.z = _targetTransform.position.z - 10f;
+            _position.y = 20;
+            _position.z = _targetTransform.position.z +20f;
 
             transform.position = Vector3.Lerp(transform.position, _position, Time.deltaTime * 3f);
         }

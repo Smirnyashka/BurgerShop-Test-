@@ -1,5 +1,4 @@
-﻿using Code.Configs;
-using Code.Hero;
+﻿using Code.Hero;
 using Code.Services.AssetProvider;
 using Code.Services.InputService;
 using UnityEngine;
@@ -9,7 +8,7 @@ namespace Code.Root
 {
     public class SceneInstaller : MonoInstaller
     {
-        [SerializeField]private PlayerMovement heroPlayerMovement;
+        [SerializeField]private PlayerMobileMovement heroPlayerMovement;
         
         public override void InstallBindings()
         {
@@ -27,8 +26,6 @@ namespace Code.Root
 
         private void BindUnits()
         {
-            Container.Bind<HeroConfig>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PlayerMovement>().FromInstance(heroPlayerMovement).AsSingle();
         }
 
         private void BindConfigs()
@@ -39,7 +36,8 @@ namespace Code.Root
         private void BindServices()
         {
             Container.Bind<GameInput>().AsSingle();
-            Container.BindInterfacesAndSelfTo<SimpleInput>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerMobileMovement>().FromInstance(heroPlayerMovement).AsSingle();
+            Container.BindInterfacesAndSelfTo<MobileInput>().AsSingle();
         }
     }
 }

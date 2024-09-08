@@ -1,29 +1,32 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Code.Services.InputService
 {
     public class MobileInput : MonoBehaviour
     {
-        private Vector2 _moveDirection;
-        public float _moveSpeed = 5f;
+        private IMovable _movable;
+        private Vector2 _inputDirection;
 
-        public void InputPlayer(InputAction.CallbackContext context)
+        [Inject]
+        public void Contruct(IMovable movable)
         {
-            _moveDirection = context.ReadValue<Vector2>();
+            _movable = movable;
+        }
+        
+        public void ReadInput(InputAction.CallbackContext context) =>
+            _inputDirection = context.ReadValue<Vector2>();
+
+        private void ReadDirection()
+        {
+            Vector3 direction = new Vector3(_inputDirection.x, 0, _inputDirection.y);
+            direction.Normalize();
+            
+            _movable.Move(direction);
         }
 
-
-        private void ReadInput(InputAction.CallbackContext context)
-        {
-            _moveDirection = context.ReadValue<Vector2>();
-        }
-
-        public void Update()
-        {
-            Vector3 movement = new Vector3(_moveDirection.x, 0, _moveDirection.y);
-            movement.Normalize();
-            transform.Translate(_moveSpeed * movement * Time.deltaTime);
-        }
+        private void Update() =>
+            ReadDirection();
     }
 }

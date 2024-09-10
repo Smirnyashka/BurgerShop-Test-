@@ -1,14 +1,14 @@
 fileFormatVersion: 2
 guid: f05ac3667203a45208323894f1cbbc4f
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -24,7 +24,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -40,6 +40,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -67,6 +68,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -80,7 +82,97 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: player(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: PLayer
+      parentName: player(Clone)
+      position: {x: 9.688029, y: -0.00000046938658, z: 6.1981854}
+      rotation: {x: -0.57974464, y: 0.4048409, z: 0.40484092, w: 0.57974464}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Main
+      parentName: PLayer
+      position: {x: 0.024785088, y: 0.11228665, z: 0.013973183}
+      rotation: {x: 0.5805863, y: -0.40542874, z: -0.4042523, w: 0.57890165}
+      scale: {x: 1, y: 0.9999997, z: 0.9999999}
+    - name: Body
+      parentName: Main
+      position: {x: -4.0856205e-16, y: 0.0068397424, z: 4.3533176e-13}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: Head
+      parentName: Body
+      position: {x: 1.9497292e-13, y: 0.006287593, z: 8.833467e-13}
+      rotation: {x: -0, y: -0.00000012644054, z: 1.7763566e-15, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 1.0000001}
+    - name: Hand1.L
+      parentName: Body
+      position: {x: -0.0055474644, y: 0.0051522166, z: 3.6407072e-10}
+      rotation: {x: 0.016731024, y: -0.014535157, z: 0.79870784, w: 0.6013108}
+      scale: {x: 1.0000004, y: 0.99999934, z: 1.0000001}
+    - name: Hand2.L
+      parentName: Hand1.L
+      position: {x: 5.587935e-10, y: 0.0053975373, z: -1.11758706e-10}
+      rotation: {x: 0.013725354, y: 0.017115047, z: -0.11434227, w: 0.9931991}
+      scale: {x: 1.0000006, y: 1.0000012, z: 1.0000005}
+    - name: Hand3.L
+      parentName: Hand2.L
+      position: {x: 3.6583514e-10, y: 0.005317546, z: -5.2154064e-10}
+      rotation: {x: -0.0007891127, y: -0.99920624, z: -0.026612455, w: 0.029630316}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000005}
+    - name: Hand1.R
+      parentName: Body
+      position: {x: 0.005547462, y: 0.005152215, z: 6.0155797e-10}
+      rotation: {x: -0.016730893, y: -0.014535453, z: 0.7987082, w: -0.6013102}
+      scale: {x: 1.0000014, y: 1.0000006, z: 1}
+    - name: Hand2.R
+      parentName: Hand1.R
+      position: {x: 5.2154064e-10, y: 0.005397537, z: 7.4505804e-11}
+      rotation: {x: 0.0137254875, y: -0.017115094, z: 0.11434287, w: 0.99319905}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000001}
+    - name: Hand3.R
+      parentName: Hand2.R
+      position: {x: 6.3329936e-10, y: 0.005317548, z: -1.11758706e-10}
+      rotation: {x: 0.00078921055, y: -0.9992063, z: -0.026612472, w: -0.029630268}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000004}
+    - name: Leg1.L
+      parentName: Main
+      position: {x: -0.0030908228, y: -0.0001480341, z: -0.00003950328}
+      rotation: {x: 0.7070601, y: 0.008123636, z: 0.7070602, w: 0.008123711}
+      scale: {x: 0.99999917, y: 0.99999946, z: 1}
+    - name: Leg2.L
+      parentName: Leg1.L
+      position: {x: -9.094947e-15, y: 0.005553637, z: 2.2743052e-10}
+      rotation: {x: 0.000000083819025, y: -0.000000029933286, z: 0.021033242, w: 0.99977875}
+      scale: {x: 1.0000001, y: 0.99999976, z: 1.0000002}
+    - name: Leg3.L
+      parentName: Leg2.L
+      position: {x: 5.5185863e-11, y: 0.0066838465, z: -4.932328e-11}
+      rotation: {x: 0.5047501, y: 0.49520433, z: -0.50475013, w: 0.4952043}
+      scale: {x: 1.0000001, y: 1.0000002, z: 0.9999999}
+    - name: Leg1.R
+      parentName: Main
+      position: {x: 0.0030908233, y: -0.00014803412, z: -0.000039503277}
+      rotation: {x: -0.7070602, y: 0.008123636, z: 0.7070601, w: -0.008123681}
+      scale: {x: 0.9999996, y: 0.99999976, z: 1}
+    - name: Leg2.R
+      parentName: Leg1.R
+      position: {x: 2.4720066e-11, y: 0.005553636, z: 1.0801187e-10}
+      rotation: {x: -0.000000020489091, y: -0.00000008849381, z: -0.021033302, w: 0.99977875}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000001}
+    - name: Leg3.R
+      parentName: Leg2.R
+      position: {x: 3.011337e-11, y: 0.0066838455, z: -5.229212e-10}
+      rotation: {x: 0.50475013, y: -0.4952044, z: 0.5047502, w: 0.49520424}
+      scale: {x: 1.0000006, y: 1.0000005, z: 0.99999994}
+    - name: Cube.012
+      parentName: player(Clone)
+      position: {x: 9.688029, y: 0.9480764, z: 6.1981854}
+      rotation: {x: 0, y: 0.5725315, z: -0, w: 0.8198827}
+      scale: {x: 0.36366406, y: 0.36366403, z: 0.36366406}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -91,14 +183,15 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 

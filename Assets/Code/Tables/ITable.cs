@@ -3,6 +3,6 @@
     public interface ITable
     {
         void Clear();
-        void AddBurger();
+        void Add();
     }
 }

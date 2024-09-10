@@ -13,7 +13,7 @@ namespace Code.Services.StateMachine.States
 
         public void Enter()
         {
-            _sceneLoader.LoadScene("SampleScene");
+            _sceneLoader.LoadScene("GameLoopScene");
         }
 
         public void Exit()

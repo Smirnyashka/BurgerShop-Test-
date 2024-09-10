@@ -1,18 +1,40 @@
-﻿using Code.Tables;
+﻿using System;
+using Code.Commands;
+using Code.Hero;
+using Code.Tables;
+using Code.Units.Chef;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Code.Trigger
 {
-    public class StoveTrigger: MonoBehaviour
+    public class StoveTrigger : MonoBehaviour, ITrigger
     {
+        [SerializeField] private Table _table;
+        [SerializeField] private BoxCollider _collider;
 
-        [SerializeField]private Table _table;
-        [SerializeField]private BoxCollider _collider;
+        private Chef _chef;
 
-        private void OnTriggerEnter(Collider other)
+        public void OnTriggerEnter(Collider other)
         {
-            Debug.Log("stove trigger activate");
-            _table.Clear();
+            _chef = other.GetComponent<Chef>();
+            if (_chef == null)
+                throw new NullReferenceException(nameof(_chef));
+
+            ICommand command = new ClearTableCommand(_table);
+            _chef.OnTaskStarted?.Invoke();
+
+            _chef.Do(command);
+        }
+
+        public void OnTriggerExit(Collider other)
+        {
+            if (_chef.Timer == null)
+                throw new NullReferenceException(nameof(_chef.Timer));
+            
+            _chef.OnTaskEnded?.Invoke();
+
+            _chef.Timer.Dispose();
         }
 
         private void OnDrawGizmos()

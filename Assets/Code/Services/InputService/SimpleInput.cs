@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Code.Movement;
+using UnityEngine;
 using Zenject;
 
 namespace Code.Services.InputService
@@ -23,7 +24,7 @@ namespace Code.Services.InputService
             var inputDirection = _gameInput.GamePlay.Movement.ReadValue<Vector3>();
             var direction = new Vector3(-inputDirection.y, 0f, -inputDirection.x);
 
-            _movable.Move(direction);
+            _movable.Move(direction, 5);
         }
     }
 }

@@ -1,0 +1,35 @@
+﻿using Code.Movement;
+using Code.Services.InputService;
+using Cysharp.Threading.Tasks;
+using UniRx;
+using UnityEngine;
+using UnityEngine.AI;
+
+namespace Code.Commands
+{
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class ClientAgentMovement : MonoBehaviour, IMovable
+    {
+        private readonly ReactiveProperty<bool> _isMoving = new();
+
+        private NavMeshAgent _navMeshAgent;
+
+        public IReactiveProperty<bool> IsMoving => _isMoving;
+
+        private void Awake() => 
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+
+        public async void Move(Vector3 position, float duration)
+        {
+            _isMoving.Value = true;
+
+            _navMeshAgent.SetDestination(position);
+
+            await UniTask.WaitForSeconds(duration);
+            
+            _navMeshAgent.ResetPath();
+
+            _isMoving.Value = false;
+        }
+    }
+}

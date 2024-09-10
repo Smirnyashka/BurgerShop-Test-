@@ -1,6 +1,4 @@
-﻿using Code.Services.AssetProvider;
-using Code.Services.Factories;
-using Code.Services.InputService;
+﻿using Code.Services.Factories;
 using Code.Services.SceneLoader;
 using Code.Services.StateMachine;
 using Zenject;
@@ -22,7 +20,7 @@ namespace Code.Root
 
         private void BindAssetProvider()
         {
-            Container.BindInterfacesAndSelfTo<AssetPathes>().AsSingle();
+            //Container.BindInterfacesAndSelfTo<AssetPathes>().AsSingle();
         }
 
         private void BindFactories()

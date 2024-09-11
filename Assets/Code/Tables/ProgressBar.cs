@@ -13,29 +13,25 @@ namespace Code.Tables
     {
         [SerializeField]private Image _bar;
 
-        private Chef _chef;
+        private IPlayer _chef;
 
         [Inject]
         public void Construct(Chef chef)
         {
             _chef = chef;
-        }
-
-        private void Start()
-        {
-            HideProgressBar();
-            ShowProgressBar();
-        }
-
-        private void OnEnable()
-        {
+            
             _chef.OnTaskStarted += ShowProgressBar;
             _chef.OnTaskStarted += FillProgress;
             _chef.OnTaskEnded += HideProgressBar;
             _chef.OnTaskEnded += ClearProgress;
         }
 
-        private void OnDisable()
+        private void Start() => 
+            HideProgressBar();
+
+        
+
+        private void OnDestroy()
         {
             _chef.OnTaskStarted -= ShowProgressBar;
             _chef.OnTaskStarted -= FillProgress;
@@ -62,9 +58,7 @@ namespace Code.Tables
             _bar.DOFillAmount(ProgressBarConst.Max, 5);
         }
 
-        private void ClearProgress()
-        {
+        public void ClearProgress() => 
             _bar.fillAmount = ProgressBarConst.Min;
-        }
     }
 }

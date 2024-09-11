@@ -13,7 +13,7 @@ namespace Code.Trigger
         [SerializeField] private Table _table;
         [SerializeField] private BoxCollider _collider;
 
-        private Chef _chef;
+        private IPlayer _chef;
 
         public void OnTriggerEnter(Collider other)
         {
@@ -22,19 +22,13 @@ namespace Code.Trigger
                 throw new NullReferenceException(nameof(_chef));
 
             ICommand command = new ClearTableCommand(_table);
-            _chef.OnTaskStarted?.Invoke();
 
             _chef.Do(command);
         }
 
         public void OnTriggerExit(Collider other)
         {
-            if (_chef.Timer == null)
-                throw new NullReferenceException(nameof(_chef.Timer));
-            
-            _chef.OnTaskEnded?.Invoke();
-
-            _chef.Timer.Dispose();
+            _chef.ResetTask();
         }
 
         private void OnDrawGizmos()

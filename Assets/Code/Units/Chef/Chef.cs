@@ -10,8 +10,8 @@ namespace Code.Units.Chef
 {
     public class Chef : MonoBehaviour, IPlayer
     {
-        public Action OnTaskStarted;
-        public Action OnTaskEnded;
+        public event Action OnTaskStarted;
+        public event Action OnTaskEnded;
         
         private IDisposable _timer;
         
@@ -30,15 +30,19 @@ namespace Code.Units.Chef
         public void Do(ICommand command)
         {
             OnTaskStarted?.Invoke();
-
             var timerTime = TimeSpan.FromSeconds(5);
             _timer = Observable.Timer(timerTime)
                 .Subscribe(_ =>
                 {
-                    OnTaskEnded?.Invoke();
                     command.Execute();
-                    _timer.Dispose();
+                    ResetTask();
                 });
+        }
+
+        public void ResetTask()
+        {
+            OnTaskEnded?.Invoke();
+            _timer.Dispose();
         }
     }
 }

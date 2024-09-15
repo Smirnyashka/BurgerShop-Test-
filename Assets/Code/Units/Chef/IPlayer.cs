@@ -7,13 +7,16 @@ namespace Code.Units.Chef
 {
     public interface IPlayer
     {
-        event Action OnTaskStarted;
-        event Action OnTaskEnded;
+        event Action<float> TaskStarted;
+        event Action TaskEnded;
+        public bool HasBurger { get; }
 
         IMovable Movement { get; }
         IChefConfig Config { get; }
 
-        void Do(ICommand command);
+        void Do(ICommand command, float taskTime);
         void ResetTask();
+        void PutBurger();
+        void TakeBurger();
     }
 }

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Settings
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 5
-  <BurgerCookingSpeed>k__BackingField: 2.54
-  <CashServiceSpeed>k__BackingField: 3.72
+  <BurgerCookingSpeed>k__BackingField: 3.01
+  <CashServiceSpeed>k__BackingField: 0.93
+  <UpgradeMultiply>k__BackingField: 0.26
+  <PriceMultiply>k__BackingField: 2

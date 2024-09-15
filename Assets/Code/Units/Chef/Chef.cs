@@ -2,6 +2,7 @@
 using Code.Commands;
 using Code.Configs;
 using Code.Movement;
+using Code.Tables;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -10,13 +11,13 @@ namespace Code.Units.Chef
 {
     public class Chef : MonoBehaviour, IPlayer
     {
-        public event Action OnTaskStarted;
-        public event Action OnTaskEnded;
-        
+        public event Action<float> TaskStarted;
+        public event Action TaskEnded;
+
         private IDisposable _timer;
-        
-        public IDisposable Timer => _timer;
-        
+        private Burger _burger;
+
+        public bool HasBurger => _burger.IsActive;
         public IMovable Movement { get; private set; }
         public IChefConfig Config { get; private set; }
 
@@ -24,13 +25,16 @@ namespace Code.Units.Chef
         public void Construct(IChefConfig config) => 
             Config = config;
 
-        private void Awake() => 
-            Movement = GetComponent<IMovable>();
-
-        public void Do(ICommand command)
+        private void Awake()
         {
-            OnTaskStarted?.Invoke();
-            var timerTime = TimeSpan.FromSeconds(5);
+            _burger = GetComponentInChildren<Burger>();
+            Movement = GetComponent<IMovable>();
+        }
+        
+        public void Do(ICommand command, float taskTime)
+        {
+            TaskStarted?.Invoke(taskTime);
+            var timerTime = TimeSpan.FromSeconds(taskTime);
             _timer = Observable.Timer(timerTime)
                 .Subscribe(_ =>
                 {
@@ -41,8 +45,14 @@ namespace Code.Units.Chef
 
         public void ResetTask()
         {
-            OnTaskEnded?.Invoke();
-            _timer.Dispose();
+            TaskEnded?.Invoke();
+            _timer?.Dispose();
         }
+
+        public void TakeBurger() => 
+            _burger.ShowBurger();
+
+        public void PutBurger() => 
+            _burger.HideBurger();
     }
 }

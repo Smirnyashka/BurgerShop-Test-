@@ -6,6 +6,7 @@ using Code.Services.AssetManagement;
 using Code.Services.CameraService;
 using Code.Services.Factories;
 using Code.Services.InputService;
+using Code.Services.WalletService;
 using Code.Tables;
 using Code.Units.Chef;
 using UnityEngine;
@@ -37,6 +38,12 @@ namespace Code.Root
             BindAnimation();
             BindProgressBar();
             BindTrash();
+            BindWallet();
+        }
+
+        private void BindWallet()
+        {
+            Container.BindInterfacesAndSelfTo<Wallet>().AsSingle();
         }
 
         private void BindProgressBar()
@@ -59,7 +66,6 @@ namespace Code.Root
         private void BindAnimation()
         {
             Container.Bind<Animator>().FromComponentInHierarchy().AsSingle();
-            Container.BindInterfacesAndSelfTo<AnimationController>().AsSingle();
             Container.BindInterfacesAndSelfTo<WalkView>().AsSingle();
         }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using Code.Commands;
-using Code.Hero;
+﻿using Code.Commands;
 using Code.Tables;
 using Code.Units.Chef;
 using UnityEngine;
@@ -10,27 +8,21 @@ namespace Code.Trigger
     class DeliveryDeskTrigger : MonoBehaviour, ITrigger
     {
         [SerializeField] private Table _table;
-        [SerializeField] private BoxCollider _collider;
-        
-        private Chef _chef;
+
+        private IPlayer _chef;
 
         public void OnTriggerEnter(Collider other)
         {
             _chef = other.GetComponent<Chef>();
-            if (_chef == null)
-                throw new NullReferenceException(nameof(_chef));
+            
+            if (_table.HasBurger || _chef.HasBurger == false) 
+                return;
 
-            ICommand command = new AddBurgerCommand(_table);
-
-            _chef.Do(command);
+            ICommand command = new MoveBurgerToTable(_chef,_table);
+            _chef.Do(command, _chef.Config.BurgerCookingSpeed);
         }
 
-        public void OnTriggerExit(Collider other)
-        {
-            if (_chef.Timer == null)
-                throw new NullReferenceException(nameof(_chef.Timer));
-
-            _chef.Timer.Dispose();
-        }
+        public void OnTriggerExit(Collider other) => 
+            _chef.ResetTask();
     }
 }

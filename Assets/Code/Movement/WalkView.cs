@@ -1,27 +1,26 @@
-﻿using Code.Hero;
+﻿using System;
+using Code.Hero;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
 namespace Code.Movement
 {
-    [RequireComponent(typeof(Animator))]
     public class WalkView : MonoBehaviour
     {
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
-        private AnimationController _animationController;
+        private Animator _animator;
         private IMovable _movable;
 
-        [Inject]
-        public void Construct(AnimationController animationController)
+        private void Awake()
         {
-            _animationController = animationController;
+            _animator = GetComponentInChildren<Animator>();
             _movable = GetComponent<IMovable>();
         }
 
         private void OnEnable() =>
-            _movable.IsMoving.Subscribe(isMoving => { _animationController.SetWalkAnimationState(isMoving); })
+            _movable.IsMoving.Subscribe(isMoving => { _animator.SetBool(AnimationHashes.Walk, isMoving); })
                 .AddTo(_disposable);
 
         private void OnDisable() =>

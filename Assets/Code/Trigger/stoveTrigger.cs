@@ -1,9 +1,7 @@
-﻿using System;
-using Code.Commands;
-using Code.Hero;
+﻿using Code.Commands;
 using Code.Tables;
 using Code.Units.Chef;
-using Unity.VisualScripting;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Code.Trigger
@@ -11,19 +9,19 @@ namespace Code.Trigger
     public class StoveTrigger : MonoBehaviour, ITrigger
     {
         [SerializeField] private Table _table;
-        [SerializeField] private BoxCollider _collider;
+        [SerializeField] private BoxCollider _trigger;
 
         private IPlayer _chef;
 
         public void OnTriggerEnter(Collider other)
         {
             _chef = other.GetComponent<Chef>();
-            if (_chef == null)
-                throw new NullReferenceException(nameof(_chef));
+            
+            if(_table.HasBurger == false || _chef.HasBurger) 
+                return;
 
-            ICommand command = new ClearTableCommand(_table);
-
-            _chef.Do(command);
+            ICommand command = new MoveBurgerToChef(_chef, _table);
+            _chef.Do(command, _chef.Config.BurgerCookingSpeed);
         }
 
         public void OnTriggerExit(Collider other)
@@ -33,10 +31,10 @@ namespace Code.Trigger
 
         private void OnDrawGizmos()
         {
-            if (!_collider) return;
+            if (!_trigger) return;
 
             Gizmos.color = new Color32(30, 200, 30, 130);
-            Gizmos.DrawCube(transform.position + _collider.center, _collider.size);
+            Gizmos.DrawCube(transform.position + _trigger.center, _trigger.size);
         }
     }
 }

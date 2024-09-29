@@ -22,8 +22,11 @@ namespace Code.Units.Chef
         public IChefConfig Config { get; private set; }
 
         [Inject]
-        public void Construct(IChefConfig config) => 
+        public void Construct(IChefConfig config)
+        {
+            gameObject.SetActive(true);
             Config = config;
+        }
 
         private void Awake()
         {

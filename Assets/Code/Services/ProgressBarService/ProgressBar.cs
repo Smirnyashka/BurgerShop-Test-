@@ -1,25 +1,25 @@
-﻿using Code.Configs;
-using Code.Constants;
+﻿using Code.Constants;
 using Code.Units.Chef;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Code.Tables
+namespace Code.Services.ProgressBarService
 {
-    public class ProgressBar : MonoBehaviour
+    public class ProgressBar: MonoBehaviour
     {
-        [SerializeField] private Image _bar;
-
         private IPlayer _chef;
+        
+        [SerializeField] private Image _bar;
+        
         private Tweener _barFill;
 
         [Inject]
         public void Construct(Chef chef)
         {
             _chef = chef;
-
+            
             _chef.TaskStarted += ShowProgressBar;
             _chef.TaskStarted += FillProgress;
             _chef.TaskEnded += ClearProgress;
@@ -36,20 +36,21 @@ namespace Code.Tables
             _chef.TaskEnded -= ClearProgress;
             _chef.TaskEnded -= HideProgressBar;
         }
-
-        private void HideProgressBar()
+        
+        
+        public void HideProgressBar()
         {
             gameObject.SetActive(false);
             Debug.Log("progress bar hide");
         }
 
-        private void ShowProgressBar(float taskTime)
+        public void ShowProgressBar(float taskTime)
         {
             gameObject.SetActive(true);
             Debug.Log("progress bar show");
         }
 
-        private void FillProgress(float taskTime)
+        public void FillProgress(float taskTime)
         {
             ClearProgress();
             _barFill = _bar.DOFillAmount(ProgressBarConst.Max, taskTime);
@@ -60,5 +61,7 @@ namespace Code.Tables
             _barFill.Kill(_bar);
             _bar.fillAmount = ProgressBarConst.Min;
         }
+
+        
     }
 }

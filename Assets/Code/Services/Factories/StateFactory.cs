@@ -11,6 +11,6 @@ namespace Code.Services.Factories
             _container = container;
 
         public IState CreateState<TState>() where TState : IState =>
-            _container.Resolve<TState>();
+            _container.Instantiate<TState>();
     }
 }

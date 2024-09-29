@@ -1,4 +1,5 @@
-﻿using Code.Tables;
+﻿using Code.Services.ProgressBarService;
+using Code.Tables;
 using UnityEngine;
 using Zenject;
 

@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Code.Services.StateMachine
 {
-    public class GameStateMachine: IStateMachine, IInitializable
+    public class GameStateMachine: IStateMachine
     {
         private readonly StateFactory _stateFactory;
         
@@ -21,18 +21,9 @@ namespace Code.Services.StateMachine
         public void Enter<TState>() where TState : IState
         {
             _activeState?.Exit();
-            IState state = _states[typeof(TState)];
+            IState state = _stateFactory.CreateState<TState>();
             _activeState = state;
             state.Enter();
-        }
-
-        public void Initialize()
-        {
-            _states = new Dictionary<Type, IState>
-            {
-                [typeof(LoadingState)] = _stateFactory.CreateState<LoadingState>(),
-                [typeof(GameLoopState)] = _stateFactory.CreateState<GameLoopState>()
-            };
         }
     }
 }

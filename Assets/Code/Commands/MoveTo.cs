@@ -1,6 +1,7 @@
 ﻿using System;
-using Code.Enemy;
+using Code.Units.Clients;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Code.Commands
 {
@@ -19,10 +20,9 @@ namespace Code.Commands
 
         public void Execute()
         {
-            if (_client == null) throw new NullReferenceException(nameof(_client));
+            Debug.Log($"Move to - {_point.position}");
             if (_point == null) throw new NullReferenceException(nameof(_point));
-            
-            _client.movable.Move(_point.position, _duration);
+            _client.Movable.Move(_point.position, _duration);
         }
     }
 }

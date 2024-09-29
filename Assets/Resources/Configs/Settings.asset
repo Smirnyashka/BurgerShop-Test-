@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848e630bb7314f03a9b9111e5eb6dc09, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 5
+  <Speed>k__BackingField: 4.0335155
   <BurgerCookingSpeed>k__BackingField: 3.01
   <CashServiceSpeed>k__BackingField: 0.93
   <UpgradeMultiply>k__BackingField: 0.26
   <PriceMultiply>k__BackingField: 2
+  <ClientCount>k__BackingField: 1

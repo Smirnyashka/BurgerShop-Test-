@@ -5,8 +5,9 @@ using Zenject;
 namespace Code.Configs
 {
     [CreateAssetMenu(fileName = "NewGameSettings", menuName = "Game/GameSettings")]
-    public class GameSettings : ScriptableObject, IChefConfig, IUpgradeConfig
+    public class GameSettings : ScriptableObject, IChefConfig, IUpgradeConfig, IClientConfig
     {
+
         [field: Header("Chef")]
         [field: SerializeField, Range(0, 5)] public float Speed { get; set; }
         [field: SerializeField, Range(0, 5)] public float BurgerCookingSpeed { get; private set; }
@@ -15,6 +16,15 @@ namespace Code.Configs
         [field: Header("Upgrade")]
         [field: SerializeField, Range(0, 5)] public float UpgradeMultiply { get; private set; }
         [field: SerializeField, Range(0, 5)] public int PriceMultiply { get; private set; }
+        
+        [field: Header("Client")]
+        [field: SerializeField, Range(0, 5)] public int ClientCount { get; private set; }
+
+    }
+
+    public interface IClientConfig
+    {
+        public int ClientCount { get; }
     }
 
     public interface IUpgradeConfig

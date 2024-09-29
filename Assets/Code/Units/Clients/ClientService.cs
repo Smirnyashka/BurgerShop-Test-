@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Code.Commands;
+using Code.Configs;
 using Code.Services.AssetManagement;
 using Code.Services.Factories;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
-namespace Code.Enemy
+namespace Code.Units.Clients
 {
     public class ClientService: MonoBehaviour
     {
         private readonly Queue<IClient> _clients = new();
-        //[SerializeField]private Transform _spawnPoint;
-        
+
         private IClientFactory _factory;
         private IAssetProvider _assetProvider;
-        private int _clientCount = 3;
         
         private IClient _current;
+        
+        private int _clientCount = 3;
 
         public bool IsSend => _current != null;
         
@@ -37,17 +39,20 @@ namespace Code.Enemy
         [SerializeField] private Transform _away;
         [SerializeField] private float _awayDuration;
 
-        private void Awake()
+        
+        [Inject]
+        private void Construct(IAssetProvider assetProvider,IClientFactory factory)
         {
-            _factory = new ClientFactory(_assetProvider);
+            _assetProvider = assetProvider;
+            _factory = factory;
         }
 
         public void LoadClients()
         {
+            if(_assetProvider == null) throw new NullReferenceException("Asset provider is null");
+            if(_factory == null) throw new NullReferenceException("Factory is null");
             for (int i = 0; i < _clientCount; i++)
-            {
-                _clients.Enqueue(_factory.CreateClient(transform));
-            }
+                _clients.Enqueue(_factory.CreateClient(_spawn, _spawn));
         }
         
         public void SendClient()
@@ -65,16 +70,16 @@ namespace Code.Enemy
         private IClient DequeueClient()
         {
             IClient last = _clients.Dequeue();
-            IClient previos = last;
+            IClient previous = last;
 
             foreach (var client in _clients)
             {
-                ICommand moveToPrevios = 
-                    new MoveTo(client, previos.Transform, _queueMoveDuration);
+                ICommand moveToPrevious = 
+                    new MoveTo(client, previous.Transform, _queueMoveDuration);
 
-                client.Do(moveToPrevios);
+                client.Do(moveToPrevious);
 
-                previos = client;
+                previous = client;
             }
 
             return last;

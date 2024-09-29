@@ -1,18 +1,26 @@
 ﻿using System;
-using System.Windows.Input;
 using Code.Movement;
-using Code.Services.InputService;
 using UnityEngine;
 using UnityEngine.AI;
 using ICommand = Code.Commands.ICommand;
 
-namespace Code.Enemy
+namespace Code.Units.Clients
 {
     [RequireComponent(typeof(NavMeshAgent))]
     class Client : MonoBehaviour, IClient
     {
-        public IMovable movable { get; }
-        public Transform Transform { get; }
+        public IMovable Movable { get; private set; }
+        public Transform Transform { get; private set; }
+
+        public NavMeshAgent NavMeshAgent { get; private set; }
+
+        private void Awake()
+        {
+            Transform = GetComponent<Transform>();
+            Movable = GetComponent<IMovable>();
+
+            NavMeshAgent = GetComponent<NavMeshAgent>();
+        }
 
         public void Do(ICommand command, Action onDo = null)
         {

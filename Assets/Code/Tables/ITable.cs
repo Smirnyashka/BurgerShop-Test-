@@ -4,7 +4,6 @@
     {
         void Clear();
         void Add();
-        
         public bool HasBurger { get; }
     }
 }

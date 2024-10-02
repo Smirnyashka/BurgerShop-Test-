@@ -1,80 +1,78 @@
 ﻿using Code.Configs;
 using Code.Movement;
+using Code.Services.AssetManagement;
 using Code.Services.CameraService;
+using Code.Services.ClientsStateMachine;
+using Code.Services.ClientsStateMachine.States;
 using Code.Services.InputService;
 using Code.Services.ProgressBarService;
+using Code.Services.StateMachine;
 using Code.Services.WalletService;
-using Code.Tables;
 using Code.Units.Chef;
 using Code.Units.Clients;
+using UnityEditor.TextCore.Text;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Zenject;
-using Zenject.SpaceFighter;
 
 namespace Code.Root
 {
     public class SceneInstaller : MonoInstaller
     {
-        [field: Header("Chef")]
-        [SerializeField] private GameObject _chefPrefab;
+        [field: Header("Chef")] [SerializeField]
+        private GameObject _chefPrefab;
+
         [SerializeField] private Transform _startPoint;
-        //[SerializeField]private PlayerMobileMovement _movement;
-        Chef _chef;
 
-        [field: Header("Progress Bar")] 
-        //[SerializeField] private ProgressBar _progressBar;
+        [field: Header("Progress Bar")] [SerializeField]
+        private ProgressBar _progressBar;
 
-        [field: Header("Progress Bar")]
-        [SerializeField] private Joystick _joystick;
-        //[SerializeField] private Chef _chef;
-        [SerializeField] private GameSettings _settings;
-        [SerializeField] private ClientService _clientService;
-        
+        [field: Header("Joystick")] [SerializeField]
+        private Joystick _joystick;
+
+        [field: Header("Config")] [SerializeField]
+        private GameSettings _settings;
+
+        [field: Header("Config")] [SerializeField]
+        private LevelInitializer _levelInitializer;
 
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {
             BindConfig();
-            
             BindJoystick();
             BindInputService();
-            //BindPlayer();
             BindPlayerRouter();
             BindAnimation();
-            BindProgressBar();
             BindChef();
+            BindProgressBar();
             BindCamera();
             BindWallet();
-            
-            /*Container.Resolve<IClientServiceProvider>().Set(_clientService);
-            Container.Resolve<IStateMachine>().Enter<LoadingClientState>();*/
+
+            Container.BindInterfacesAndSelfTo<LevelInitializer>().FromInstance(_levelInitializer).AsSingle();
         }
 
         private void BindChef()
         {
-            _chef = Container
-                .InstantiatePrefabForComponent<Chef>(_chefPrefab, _startPoint.position, Quaternion.identity, null);
-            
-            Container.BindInterfacesAndSelfTo<Chef>().FromInstance(_chef).AsSingle();
-            Debug.Log("Chef Instantiated");
-        }
-        
-        private void BindProgressBar() => 
-            Container.Bind<ProgressBar>().AsSingle();
+            Chef chef = Container.InstantiatePrefabForComponent<Chef>(
+                _chefPrefab, _startPoint.position, Quaternion.identity, null);
 
-        private void BindConfig() => 
+            Container.BindInterfacesAndSelfTo<Chef>().FromInstance(chef).AsSingle();
+        }
+
+        private void BindProgressBar() =>
+            Container.Bind<ProgressBar>().FromInstance(_progressBar).AsSingle();
+
+        private void BindConfig() =>
             Container.BindInterfacesAndSelfTo<GameSettings>().FromInstance(_settings).AsSingle();
-        
+
         private void BindJoystick() =>
             Container.Bind<Joystick>().FromInstance(_joystick).AsSingle();
-        
+
         private void BindInputService() =>
             Container.BindInterfacesAndSelfTo<JoystickInput>().AsCached();
-        
-        /*private void BindPlayer() => 
-            Container.BindInterfacesAndSelfTo<Chef>().FromInstance(_chef).AsSingle();*/
-        
-        private void BindPlayerRouter() => 
+
+        private void BindPlayerRouter() =>
             Container.BindInterfacesAndSelfTo<PlayerRouter>().AsCached();
 
         private void BindAnimation()
@@ -89,7 +87,7 @@ namespace Code.Root
             Container.BindInterfacesAndSelfTo<LookAtCamera>().AsSingle();
         }
 
-        private void BindWallet() => 
+        private void BindWallet() =>
             Container.BindInterfacesAndSelfTo<Wallet>().AsSingle();
     }
 }

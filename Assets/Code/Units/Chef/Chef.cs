@@ -20,13 +20,16 @@ namespace Code.Units.Chef
         public bool HasBurger => _burger.IsActive;
         public IMovable Movement { get; private set; }
         public IChefConfig Config { get; private set; }
+        
+        public Vector3 Position
+        {
+            get => transform.position;
+            set => transform.position = value;
+        }
 
         [Inject]
-        public void Construct(IChefConfig config)
-        {
-            gameObject.SetActive(true);
+        public void Construct(IChefConfig config) => 
             Config = config;
-        }
 
         private void Awake()
         {
@@ -57,5 +60,8 @@ namespace Code.Units.Chef
 
         public void PutBurger() => 
             _burger.HideBurger();
+
+        public void GetPosition() => 
+            Position = transform.position;
     }
 }

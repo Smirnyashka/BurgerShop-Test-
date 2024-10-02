@@ -9,11 +9,13 @@ namespace Code.Services.ProgressBarService
 {
     public class ProgressBar: MonoBehaviour
     {
-        private IPlayer _chef;
-        
         [SerializeField] private Image _bar;
         
+        private IPlayer _chef;
         private Tweener _barFill;
+        private bool IsActive { get; set; } = false;
+        private readonly Vector3 _offset = new Vector3(0, 4, 0);
+
 
         [Inject]
         public void Construct(Chef chef)
@@ -28,6 +30,12 @@ namespace Code.Services.ProgressBarService
 
         private void Start() =>
             HideProgressBar();
+        
+        private void Update()
+        {
+            if(IsActive) 
+                SetPosition();    
+        }
 
         private void OnDestroy()
         {
@@ -36,32 +44,34 @@ namespace Code.Services.ProgressBarService
             _chef.TaskEnded -= ClearProgress;
             _chef.TaskEnded -= HideProgressBar;
         }
-        
-        
-        public void HideProgressBar()
+
+        private void HideProgressBar()
         {
+            IsActive = false;
             gameObject.SetActive(false);
             Debug.Log("progress bar hide");
         }
 
-        public void ShowProgressBar(float taskTime)
+        private void ShowProgressBar(float taskTime)
         {
+            IsActive = true;
             gameObject.SetActive(true);
             Debug.Log("progress bar show");
         }
 
-        public void FillProgress(float taskTime)
+        private void FillProgress(float taskTime)
         {
             ClearProgress();
             _barFill = _bar.DOFillAmount(ProgressBarConst.Max, taskTime);
         }
 
-        public void ClearProgress()
+        private void ClearProgress()
         {
             _barFill.Kill(_bar);
             _bar.fillAmount = ProgressBarConst.Min;
         }
 
-        
+        private void SetPosition() => 
+            gameObject.transform.position = _chef.Position + _offset;
     }
 }

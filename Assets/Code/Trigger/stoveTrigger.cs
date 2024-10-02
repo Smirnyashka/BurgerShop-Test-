@@ -9,7 +9,6 @@ namespace Code.Trigger
     public class StoveTrigger : MonoBehaviour, ITrigger
     {
         [SerializeField] private Table _table;
-        [SerializeField] private BoxCollider _trigger;
 
         private IPlayer _chef;
 
@@ -24,17 +23,7 @@ namespace Code.Trigger
             _chef.Do(command, _chef.Config.BurgerCookingSpeed);
         }
 
-        public void OnTriggerExit(Collider other)
-        {
+        public void OnTriggerExit(Collider other) => 
             _chef.ResetTask();
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (!_trigger) return;
-
-            Gizmos.color = new Color32(30, 200, 30, 130);
-            Gizmos.DrawCube(transform.position + _trigger.center, _trigger.size);
-        }
     }
 }

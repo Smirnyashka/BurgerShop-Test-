@@ -1,7 +1,4 @@
-﻿using System;
-using Code.Hero;
-using Code.Trigger;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.Tables
 {
@@ -11,10 +8,8 @@ namespace Code.Tables
         
         public bool HasBurger => _burger.IsActive;
 
-        public void Clear()
-        {
+        public void Clear() => 
             _burger.HideBurger();
-        }
 
         public void Add()
         {

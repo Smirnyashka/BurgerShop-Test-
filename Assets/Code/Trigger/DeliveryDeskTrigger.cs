@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Code.Trigger
 {
-    class DeliveryDeskTrigger : MonoBehaviour, ITrigger
+    class DeliveryDeskTrigger : MonoBehaviour
     {
         [SerializeField] private Table _table;
 

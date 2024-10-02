@@ -1,5 +1,4 @@
-﻿using System;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
 namespace Code.Movement
@@ -25,7 +24,7 @@ namespace Code.Movement
             if (CheckMovementState(direction)) return;
 
             _model.LookAt(_model.position + direction);
-            _controller.Move(-direction * speed * Time.deltaTime);
+            _controller.Move(-direction * (speed * Time.deltaTime));
         }
 
         private bool CheckMovementState(Vector3 direction)

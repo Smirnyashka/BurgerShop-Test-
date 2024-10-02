@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -10,8 +9,8 @@ namespace Code.Services.WalletService
     public class WalletView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _counter;
+        
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
-
         private IWallet _wallet;
 
         [Inject]
@@ -27,14 +26,10 @@ namespace Code.Services.WalletService
                 .AddTo(_disposable);
         }
 
-        private void OnValueChanged(int value)
-        {
+        private void OnValueChanged(int value) =>
             _counter.text = $"{value}";
-        }
-        
-        
 
-        private void OnDisable() => 
+        private void OnDisable() =>
             _disposable.Dispose();
     }
 }

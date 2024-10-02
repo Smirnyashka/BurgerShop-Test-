@@ -6,7 +6,7 @@ namespace Code.Services.StateMachine.States
     public class LoadingState : IState
     {
         private readonly ISceneLoader _sceneLoader;
-        private IStateMachine _stateMachine;
+        private readonly IStateMachine _stateMachine;
 
         public LoadingState(ISceneLoader sceneLoader, IStateMachine stateMachine)
         {

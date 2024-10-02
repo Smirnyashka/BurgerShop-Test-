@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Code.Services.Factories;
-using Code.Services.StateMachine.States;
-using Zenject;
 
 namespace Code.Services.StateMachine
 {

@@ -11,8 +11,7 @@ namespace Code.Services.WalletService
 
         public void AddMoney(int addValue)
         {
-            if (_coins.Value < 0) 
-                _coins.Value = 0;
+            ValidateValue();
             
             if (addValue <= 0) 
                 throw new ArgumentException(nameof(addValue));
@@ -22,20 +21,22 @@ namespace Code.Services.WalletService
 
         public bool TryPayMoney(int value)
         {
-            if (_coins.Value < 0)
-                _coins.Value = 0;
+            ValidateValue();
 
             if (value <= 0) 
                 throw new ArgumentException(nameof(value));
 
             if (_coins.Value <= value)
-            {
-                Debug.Log("нет бабок долбаеб");
                 return false;
-            }
 
             _coins.Value -= value;
             return true;
+        }
+        
+        private void ValidateValue()
+        {
+            if(_coins.Value < 0) 
+                _coins.Value = 0;
         }
     }
 }

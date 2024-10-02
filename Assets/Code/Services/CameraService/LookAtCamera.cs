@@ -1,5 +1,4 @@
 ﻿using Code.Services.ProgressBarService;
-using Code.Tables;
 using UnityEngine;
 using Zenject;
 
@@ -7,7 +6,7 @@ namespace Code.Services.CameraService
 {
     public class LookAtCamera: ITickable
     {
-        private ProgressBar _bar;
+        private readonly ProgressBar _bar;
         private readonly Camera _camera;
 
         private LookAtCamera(Camera camera, ProgressBar bar)
@@ -17,9 +16,7 @@ namespace Code.Services.CameraService
             _bar = bar;
         }
         
-        public void Tick()
-        {
+        public void Tick() => 
             _bar.transform.LookAt(_camera.transform);
-        }
     }
 }
